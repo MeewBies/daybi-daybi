@@ -42,7 +42,7 @@ namespace daybi2
             if (Users != null)
                 if (Users.ID == 1)
                 {
-                    MessageBox.Show("Администратор");
+                    MessageBox.Show("Администратыор");
 
                 }
                 else
