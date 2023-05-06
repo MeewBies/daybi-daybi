@@ -1,0 +1,22 @@
+﻿<Window x:Class="daybi2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:daybi2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" >
+    <Grid>
+        <Button Background="Azure" x:Name="btVhod" Click="btVhod_Click_1" Content="Вход" Margin="314,327,314,55" FontFamily="Bahnschrift Condensed" FontSize="25"></Button>
+        <TextBox x:Name="tbPass" Margin="285,250,285,135"></TextBox>
+        <TextBox x:Name="tbLogin" Margin="285,168,285,217"/>
+        <TextBlock HorizontalAlignment="Left" Margin="156,168,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="49" Width="80" FontSize="36" FontFamily="Bahnschrift Condensed"><Run Language="ru-ru" Text="Логин"/></TextBlock>
+        <TextBlock HorizontalAlignment="Left" Margin="156,250,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="49" Width="94" FontSize="36" FontFamily="Bahnschrift Condensed"><Run Language="ru-ru" Text="Пароль"/></TextBlock>
+        <TextBlock HorizontalAlignment="Center" Margin="0,31,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="69" Width="321" FontSize="72" FontFamily="Bahnschrift Condensed"><Run Language="ru-ru" Text="Авторизация"/></TextBlock>
+        <Label x:Name="Timer" Content="0" HorizontalAlignment="Left" Margin="664,172,0,0" VerticalAlignment="Top" Height="26" Width="57"/>
+        <TextBlock x:Name="countvhod" Text="0" HorizontalAlignment="Left" Margin="563,232,0,0" VerticalAlignment="Top"/>
+
+
+    </Grid>
+</Window>    
+    

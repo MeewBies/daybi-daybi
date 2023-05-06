@@ -1,0 +1,367 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище uchetstudModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Группа">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Ключ_специальности" Type="int" Nullable="false" />
+          <Property Name="Номер_группы" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6013: Первичный ключ в таблице или представлении "uchetstud.dbo.Диплом" не определен, его не удалось вывести. Эта таблица или представление исключены. Чтобы использовать сущность, необходимо проверить схему, добавить правильные ключи и раскомментировать ее.
+        <EntityType Name="Диплом">
+          <Property Name="ID" Type="nchar" MaxLength="10" />
+          <Property Name="Номер" Type="nchar" MaxLength="10" />
+          <Property Name="Дата_выдачи" Type="nchar" MaxLength="10" />
+          <Property Name="Регистрационный_номер" Type="nchar" MaxLength="10" />
+          <Property Name="Ключ_студента" Type="nchar" MaxLength="10" />
+        </EntityType>-->
+        <EntityType Name="Курсовая">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Ключ_студента" Type="int" Nullable="false" />
+          <Property Name="Курсовая" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Оценка_курсовой" Type="int" Nullable="false" />
+          <Property Name="Проект" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Оценка" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Оценки">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Ключ_преподователя" Type="int" Nullable="false" />
+          <Property Name="Ключ_предмета" Type="int" Nullable="false" />
+          <Property Name="Ключ_студента" Type="int" Nullable="false" />
+          <Property Name="Дата" Type="date" Nullable="false" />
+          <Property Name="Итоговые_оценки" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Предмет">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Наименование" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Колво_часов" Type="int" Nullable="false" />
+          <Property Name="Самостоятельные_работы" Type="int" Nullable="false" />
+          <Property Name="Итоговый_контроль" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Ошибки, обнаруженные при создании:
+предупреждение 6002: В таблице или представлении "uchetstud.dbo.Предмет_преподователь" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
+        <EntityType Name="Предмет_преподователь">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Ключ_предмета" />
+            <PropertyRef Name="Ключ_преподователя" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Ключ_предмета" Type="int" Nullable="false" />
+          <Property Name="Ключ_преподователя" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Преподователь">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Номер_пасспорта" Type="int" Nullable="false" />
+          <Property Name="Телефон" Type="int" Nullable="false" />
+          <Property Name="Квалификация" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Дата_рождения" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Специальность">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="наименование" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Аббревиатура" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Плата" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Фамилия" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Имя" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Отчество" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Номер_пасспорта" Type="int" Nullable="false" />
+          <Property Name="Ключ_группы" Type="int" Nullable="false" />
+          <Property Name="Ключ_перв" Type="int" Nullable="false" />
+          <Property Name="Дата_рождения" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="Хранилище uchetstudModelContainer">
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Группа" EntityType="Self.Группа" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Курсовая" EntityType="Self.Курсовая" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Оценки" EntityType="Self.Оценки" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Предмет" EntityType="Self.Предмет" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Преподователь" EntityType="Self.Преподователь" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Специальность" EntityType="Self.Специальность" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Предмет_преподователь" EntityType="Self.Предмет_преподователь" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Предмет_преподователь].[ID] AS [ID], 
+    [Предмет_преподователь].[Ключ_предмета] AS [Ключ_предмета], 
+    [Предмет_преподователь].[Ключ_преподователя] AS [Ключ_преподователя]
+    FROM [dbo].[Предмет_преподователь] AS [Предмет_преподователь]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="uchetstudModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Группа">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_специальности" Type="Int32" Nullable="false" />
+          <Property Name="Номер_группы" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Курсовая">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_студента" Type="Int32" Nullable="false" />
+          <Property Name="Курсовая1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Оценка_курсовой" Type="Int32" Nullable="false" />
+          <Property Name="Проект" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Оценка" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Оценки">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_преподователя" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_предмета" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_студента" Type="Int32" Nullable="false" />
+          <Property Name="Дата" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Итоговые_оценки" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Предмет">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Наименование" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Колво_часов" Type="Int32" Nullable="false" />
+          <Property Name="Самостоятельные_работы" Type="Int32" Nullable="false" />
+          <Property Name="Итоговый_контроль" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Преподователь">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Номер_пасспорта" Type="Int32" Nullable="false" />
+          <Property Name="Телефон" Type="Int32" Nullable="false" />
+          <Property Name="Квалификация" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Специальность">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="наименование" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Аббревиатура" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Плата" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Студенты">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Фамилия" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Имя" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Отчество" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Номер_пасспорта" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_группы" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_перв" Type="Int32" Nullable="false" />
+          <Property Name="Дата_рождения" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
+        <EntityType Name="Предмет_преподователь">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="Ключ_предмета" />
+            <PropertyRef Name="Ключ_преподователя" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_предмета" Type="Int32" Nullable="false" />
+          <Property Name="Ключ_преподователя" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="uchetstudEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="Self.Users" />
+          <EntitySet Name="Группа" EntityType="Self.Группа" />
+          <EntitySet Name="Курсовая" EntityType="Self.Курсовая" />
+          <EntitySet Name="Оценки" EntityType="Self.Оценки" />
+          <EntitySet Name="Предмет" EntityType="Self.Предмет" />
+          <EntitySet Name="Преподователь" EntityType="Self.Преподователь" />
+          <EntitySet Name="Специальность" EntityType="Self.Специальность" />
+          <EntitySet Name="Студенты" EntityType="Self.Студенты" />
+          <EntitySet Name="Предмет_преподователь" EntityType="Self.Предмет_преподователь" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище uchetstudModelContainer" CdmEntityContainer="uchetstudEntities">
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="uchetstudModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Группа">
+            <EntityTypeMapping TypeName="uchetstudModel.Группа">
+              <MappingFragment StoreEntitySet="Группа">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ключ_специальности" ColumnName="Ключ_специальности" />
+                <ScalarProperty Name="Номер_группы" ColumnName="Номер_группы" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Курсовая">
+            <EntityTypeMapping TypeName="uchetstudModel.Курсовая">
+              <MappingFragment StoreEntitySet="Курсовая">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ключ_студента" ColumnName="Ключ_студента" />
+                <ScalarProperty Name="Курсовая1" ColumnName="Курсовая" />
+                <ScalarProperty Name="Оценка_курсовой" ColumnName="Оценка_курсовой" />
+                <ScalarProperty Name="Проект" ColumnName="Проект" />
+                <ScalarProperty Name="Оценка" ColumnName="Оценка" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Оценки">
+            <EntityTypeMapping TypeName="uchetstudModel.Оценки">
+              <MappingFragment StoreEntitySet="Оценки">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ключ_преподователя" ColumnName="Ключ_преподователя" />
+                <ScalarProperty Name="Ключ_предмета" ColumnName="Ключ_предмета" />
+                <ScalarProperty Name="Ключ_студента" ColumnName="Ключ_студента" />
+                <ScalarProperty Name="Дата" ColumnName="Дата" />
+                <ScalarProperty Name="Итоговые_оценки" ColumnName="Итоговые_оценки" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Предмет">
+            <EntityTypeMapping TypeName="uchetstudModel.Предмет">
+              <MappingFragment StoreEntitySet="Предмет">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Наименование" ColumnName="Наименование" />
+                <ScalarProperty Name="Колво_часов" ColumnName="Колво_часов" />
+                <ScalarProperty Name="Самостоятельные_работы" ColumnName="Самостоятельные_работы" />
+                <ScalarProperty Name="Итоговый_контроль" ColumnName="Итоговый_контроль" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Преподователь">
+            <EntityTypeMapping TypeName="uchetstudModel.Преподователь">
+              <MappingFragment StoreEntitySet="Преподователь">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Номер_пасспорта" ColumnName="Номер_пасспорта" />
+                <ScalarProperty Name="Телефон" ColumnName="Телефон" />
+                <ScalarProperty Name="Квалификация" ColumnName="Квалификация" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата_рождения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Специальность">
+            <EntityTypeMapping TypeName="uchetstudModel.Специальность">
+              <MappingFragment StoreEntitySet="Специальность">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="наименование" ColumnName="наименование" />
+                <ScalarProperty Name="Аббревиатура" ColumnName="Аббревиатура" />
+                <ScalarProperty Name="Плата" ColumnName="Плата" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Студенты">
+            <EntityTypeMapping TypeName="uchetstudModel.Студенты">
+              <MappingFragment StoreEntitySet="Студенты">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Фамилия" ColumnName="Фамилия" />
+                <ScalarProperty Name="Имя" ColumnName="Имя" />
+                <ScalarProperty Name="Отчество" ColumnName="Отчество" />
+                <ScalarProperty Name="Номер_пасспорта" ColumnName="Номер_пасспорта" />
+                <ScalarProperty Name="Ключ_группы" ColumnName="Ключ_группы" />
+                <ScalarProperty Name="Ключ_перв" ColumnName="Ключ_перв" />
+                <ScalarProperty Name="Дата_рождения" ColumnName="Дата_рождения" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Предмет_преподователь">
+            <EntityTypeMapping TypeName="uchetstudModel.Предмет_преподователь">
+              <MappingFragment StoreEntitySet="Предмет_преподователь">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Ключ_предмета" ColumnName="Ключ_предмета" />
+                <ScalarProperty Name="Ключ_преподователя" ColumnName="Ключ_преподователя" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
